@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:surya_namaskar/frontpage.dart';
 import 'package:surya_namaskar/posedetails.dart';
 import 'package:surya_namaskar/salutation_step.dart';
+import 'frontpage.dart';
 
 //Need this to run the whole application
 void main() {
-  runApp(SNApp());
+  runApp(SuryaNamaskar());
 }
+
+class SuryaNamaskar extends StatelessWidget {
+  const SuryaNamaskar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Surya Namaskar',
+      theme: ThemeData(
+        primarySwatch: Colors.orange
+      ),
+      home: FrontPage()
+    );
+  }
+}
+
 
 //Starter Widget which contains everything else
 class SNApp extends StatelessWidget {
