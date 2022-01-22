@@ -20,7 +20,7 @@ is a yoga based exercise'''
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Image(
-                    image: AssetImage('images/symbol.jpg')),
+                    image: AssetImage('images/symbol.png')),
               ),
               FrontPageLabel(text: 'You can use this app to'),
               FrontPageButton(isPrimary: false, label: 'learn more', onPressed: () => true),

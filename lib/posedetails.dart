@@ -38,7 +38,7 @@ class PoseList {
   PoseDetails _createPoseIntro() {
     PoseDetails newPose = new PoseDetails();
     newPose.name = 'Introduction';
-    newPose.image = 'images/symbol.jpg';
+    newPose.image = 'images/symbol.png';
     newPose.process =
         """Surya Namaskar is a yoga based exercise for over all Personality Development - Body, Mind and Intellect - a gift of Indian heritage to mankind. This being a non-sectarian practice, it is universal in application irrespective of caste, creed, religion, gender, and nationality. Vivekanand a Kendra endeavours to bring this exercise within the reach of people in all walk of life.""";
     newPose.benefits =
