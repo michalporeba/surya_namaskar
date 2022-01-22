@@ -63,7 +63,18 @@ is a yoga based exercise'''
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Surya Namaskar')),
+      appBar: AppBar(
+          title: Text('Surya Namaskar'),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: padding),
+              child: TextButton(
+                  onPressed: () => true,
+                  child: Icon(Icons.settings)
+              ),
+            )
+          ],
+      ),
       body: SafeArea(
         child: OrientationBuilder(
           builder: (context, orientation) {
