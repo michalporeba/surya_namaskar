@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:surya_namaskar/learnpage.dart';
+import 'package:surya_namaskar/practicepage.dart';
 
 const double padding = 12.0;
 
@@ -18,24 +20,36 @@ is a yoga based exercise'''
     );
 
   Widget _learnPrompt() => FrontPageLabel(text: 'You can always');
-  Widget _learnButton() => FrontPageButton(isPrimary: false, label: 'learn more', onPressed: () => true);
+  Widget _learnButton(BuildContext context) => FrontPageButton(
+      isPrimary: false,
+      label: 'learn more',
+      onPressed: () => Navigator.push(context, MaterialPageRoute(
+        builder: (context) => const LearnPage()
+      ))
+  );
   Widget _practicePrompt() => FrontPageLabel(text: 'or you can use the app to help you');
-  Widget _practiceButton() => FrontPageButton(isPrimary: true, label: 'practice it', onPressed: () => true);
+  Widget _practiceButton(BuildContext context) => FrontPageButton(
+      isPrimary: true,
+      label: 'practice it',
+      onPressed: () => Navigator.push(context, MaterialPageRoute(
+          builder: (context) => const PracticePage()
+      ))
+  );
 
-  Widget _portrait() => Column(
+  Widget _portrait(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Spacer(),
         _introduction(),
         _symbol(),
         _learnPrompt(),
-        _learnButton(),
+        _learnButton(context),
         _practicePrompt(),
-        _practiceButton()
+        _practiceButton(context)
       ]
   );
 
-  Widget _landscape() => Row(
+  Widget _landscape(BuildContext context) => Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
@@ -50,9 +64,9 @@ is a yoga based exercise'''
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       _introduction(),
-                      _learnButton(),
+                      _learnButton(context),
                       _practicePrompt(),
-                      _practiceButton()
+                      _practiceButton(context)
                     ]
                 ),
             ),
@@ -79,8 +93,8 @@ is a yoga based exercise'''
         child: OrientationBuilder(
           builder: (context, orientation) {
             return orientation == Orientation.portrait
-              ? _portrait()
-              : _landscape();
+              ? _portrait(context)
+              : _landscape(context);
           }
         ),
       ),
