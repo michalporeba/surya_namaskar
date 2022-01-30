@@ -1,7 +1,12 @@
 # surya_namaskar
 
-A simple mobile app to teach you sunsalutations
+An exercise in flutter and UI design. The task is to improve this yoga app (forked from [here](https://github.com/rama-swuni/surya_namaskar)).
 
-## Getting Started
+| Home       | Details      | A pose    | Resources Page |
+| -----------| -------------| --------- | -------------- |
+| ![](./docs/images/ios1.png) | ![](./docs/images/ios2.png) | ![](./docs/images/ios3.png) | ![](./docs/images/ios4.png) |
 
-This project is a very basic flutter mobile app for learning sun salutations
+
+It is a simple mobile app to do with [Sun Salutation](https://en.wikipedia.org/wiki/Sun_Salutation) yoga exercise.
+
+
