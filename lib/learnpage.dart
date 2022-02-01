@@ -10,7 +10,7 @@ class LearnPage extends StatelessWidget {
     data.initializePoses();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Learn'),),
+      appBar: AppBar(title: const Text('Learn more'),),
       body: ListView.builder(
           itemCount: data.poses.length,
           itemBuilder: (context, index) {
