@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:surya_namaskar/yogabutton.dart';
-import 'practicepage.dart';
+import 'optionspage.dart';
+import 'yogabutton.dart';
 import 'yogalabel.dart';
 import 'common.dart';
 
@@ -11,9 +11,10 @@ class WarningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('There be dragons!'),),
-        body: Container(
+        body: SafeArea(
           child: Column(
-            children: [
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
               Padding(
                 padding: const EdgeInsets.all(padding),
                 child: SingleChildScrollView(
@@ -30,13 +31,13 @@ class WarningPage extends StatelessWidget {
                   onPressed: () => _acceptTheRisk(context)),
             ]
           ),
-        )
+        ),
     );
   }
 
   void _acceptTheRisk(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (context) => const PracticePage()
+    Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) => const OptionsPage()
     ));
   }
 }

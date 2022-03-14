@@ -1,3 +1,13 @@
+class Illustration {
+  final double offsetX;
+  final double offsetY;
+  final String image;
+  final double zoom;
+  final String source;
+
+  const Illustration(this.image, this.offsetX, this.offsetY, this.zoom, this.source);
+}
+
 class PoseDetails {
   late String process;
   late String breathing;
@@ -5,6 +15,7 @@ class PoseDetails {
   late String benefits;
   late String name;
   late String image;
+  late List<Illustration> illustrations;
 }
 
 class Pose {
@@ -76,6 +87,8 @@ class PoseList {
   void initializePoses() {
     poses = List<PoseDetails>.empty(growable: true);
     poses.add(_createPoseIntro());
+    poses.add(_createPoseStart());
+    poses.add(_createPose1());
     poses.add(_createPose2());
     poses.add(_createPose3());
     poses.add(_createPose4());
@@ -104,7 +117,41 @@ class PoseList {
     return newPose;
   }
 
+  PoseDetails _createPoseStart() {
+    PoseDetails newPose = new PoseDetails();
+    newPose.name = 'Sthiti';
+    newPose.image = 'images/starting.jpg';
+    newPose.process = 'Stand erect without bending any part of the body. '
+        'Let the toes, heels, knees, and thigh be joined. Body should be erect '
+        'without stiffening and relaxed. Join both the palms in Namaskar Mudra. '
+        'Place them on the chest, with thumbs touching the middle of the chest '
+        'spread out.';
+    newPose.benefits = '-';
+    newPose.breathing = 'Normal: full inhalation and slow exhalation';
+    newPose.precaution = '-';
+    newPose.illustrations = [
+      Illustration('images/pranamasana1.jpg', -520.0, 0.0, 0.21, 'keralatourism.org')
+    ];
+    return newPose;
+  }
 
+  PoseDetails _createPose1() {
+    PoseDetails newPose = new PoseDetails();
+    newPose.name = 'Ekam';
+    newPose.image = 'images/pose1.jpg';
+    newPose.process =
+    'Raise both the hands duly stretched, palms continued to be'
+        'joined together all along. As hands are on both sides of your head, allow'
+        ' the upper arms to touch your ears and bend back in the waist.';
+    newPose.benefits =
+    'Ensures a) Elasticity of Lungs, b) Flexibility of Spine,'
+        'c) Toning of muscles of abdomen, chest, forearms and upper arms.';
+    newPose.breathing = 'Inhale';
+    newPose.precaution =
+    'Do not bend your knees and elbows. Keep the upper arms'
+        'and ears aligned throughout.';
+    return newPose;
+  }
 
   PoseDetails _createPose2() {
     PoseDetails newPose = new PoseDetails();
