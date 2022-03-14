@@ -31,9 +31,7 @@ class LearnPage extends StatelessWidget {
                   child: Text(data.poses[index].process,
                       style: Theme.of(context).textTheme.headline6),
                 ),
-                Image(
-                    image: AssetImage(data.poses[index].image)
-                ),
+                PoseImage(data.poses[index]),
                 Row(
                   children: [
                     Padding(
@@ -64,6 +62,57 @@ class LearnPage extends StatelessWidget {
             );
           }
       )
+    );
+  }
+}
+
+class PoseImage extends StatefulWidget {
+  final PoseDetails poseDetails;
+
+  const PoseImage(this.poseDetails, {Key? key}) : super(key: key);
+
+  @override
+  State<PoseImage> createState() => _PoseImageState();
+}
+
+class _PoseImageState extends State<PoseImage> {
+  late TransformationController controller = TransformationController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  TapDownDetails? tapDownDetails;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onDoubleTapDown: (details) => tapDownDetails = details,
+      onDoubleTap: () {
+        print('doubletap');
+        print(tapDownDetails!.localPosition);
+        final position = tapDownDetails!.localPosition;
+        final double scale = 3;
+        final x = -position.dx * (scale - 1);
+        final y = -position.dy * (scale - 1);
+        final zoomed = Matrix4.identity()
+          ..translate(x,y)
+          ..scaled(scale);
+
+        print('$x,$y');
+
+        controller.value = zoomed;
+      },
+      child: InteractiveViewer(
+        clipBehavior: Clip.none,
+        transformationController: controller,
+        panEnabled: false,
+        scaleEnabled: false,
+        child: Image(
+            image: AssetImage(widget.poseDetails.image)
+        ),
+      ),
     );
   }
 }

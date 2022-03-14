@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:surya_namaskar/learnpage.dart';
 import 'package:surya_namaskar/practicepage.dart';
-
-const double padding = 12.0;
+import 'warningpage.dart';
+import 'yogabutton.dart';
+import 'common.dart';
+import 'yogalabel.dart';
 
 class FrontPage extends StatelessWidget {
   const FrontPage({Key? key}) : super(key: key);
 
-  Widget _introduction() => FrontPageLabel(
+  Widget _introduction() => YogaLabel(
       text: '''Sun Salutations
 (Surya Namaskar)
 is a yoga based exercise'''
@@ -19,20 +21,20 @@ is a yoga based exercise'''
           image: AssetImage('images/symbol.png'))
     );
 
-  Widget _learnPrompt() => FrontPageLabel(text: 'You can always');
-  Widget _learnButton(BuildContext context) => FrontPageButton(
+  Widget _learnPrompt() => YogaLabel(text: 'You can always');
+  Widget _learnButton(BuildContext context) => YogaButton(
       isPrimary: false,
       label: 'learn more',
       onPressed: () => Navigator.push(context, MaterialPageRoute(
         builder: (context) => const LearnPage()
       ))
   );
-  Widget _practicePrompt() => FrontPageLabel(text: 'or you can use the app to help you');
-  Widget _practiceButton(BuildContext context) => FrontPageButton(
+  Widget _practicePrompt() => YogaLabel(text: 'or you can use the app to help you');
+  Widget _practiceButton(BuildContext context) => YogaButton(
       isPrimary: true,
       label: 'practice it',
       onPressed: () => Navigator.push(context, MaterialPageRoute(
-          builder: (context) => const PracticePage()
+          builder: (context) => const WarningPage()
       ))
   );
 
@@ -98,71 +100,6 @@ is a yoga based exercise'''
           }
         ),
       ),
-    );
-  }
-}
-
-
-class FrontPageLabel extends StatelessWidget {
-  final String text;
-
-  const FrontPageLabel({
-    required this.text,
-    Key? key
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: padding, vertical: padding/2),
-        child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6
-        )
-      )
-    );
-  }
-}
-
-
-class FrontPageButton extends StatelessWidget {
-  final String label;
-  final void Function() onPressed;
-  final bool isPrimary;
-
-  const FrontPageButton({
-    required this.isPrimary,
-    required this.label,
-    required this.onPressed,
-    Key? key
-  }) : super(key: key);
-
-  Widget _button({
-    required bool isPrimary,
-    required void Function() onPressed,
-    required Widget child
-  }) {
-    return isPrimary
-        ? ElevatedButton(onPressed: onPressed, child: child,)
-        : OutlinedButton(onPressed: onPressed, child: child);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-          padding: const EdgeInsets.all(padding),
-          child: _button(
-              isPrimary: isPrimary,
-              onPressed: onPressed,
-              child: Padding(
-                padding: const EdgeInsets.all(padding),
-                child: Text(
-                    label,
-                    style: Theme.of(context).textTheme.headline4),
-              )
-          )
     );
   }
 }
