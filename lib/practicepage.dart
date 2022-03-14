@@ -23,14 +23,17 @@ class PoseScreen extends StatefulWidget {
 }
 
 class _PoseScreenState extends State<PoseScreen> {
+  final PoseList data = PoseList()..initializePoses();
   late TransformationController controller = TransformationController();
   TapDownDetails? tapDownDetails;
-  final data = PoseList()..initializePoses();
+  late PoseDetails currentPose = data.poses[1];
+  late Illustration illustration;
 
   @override 
   void initState() {
     super.initState();
     controller.value = Matrix4.identity()..translate(-520.0, -0.0)..scale(0.21);
+    _loadPose(currentPose);
   }
 
   @override
@@ -41,49 +44,36 @@ class _PoseScreenState extends State<PoseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //controller.value = Matrix4.identity()..scale(1);
-    return GestureDetector(
-      onDoubleTapDown: (details) => tapDownDetails = details,
-      onDoubleTap: () {
-        print('doubletap');
-        print(tapDownDetails!.localPosition);
-        final position = tapDownDetails!.localPosition;
-        final double scale = 3;
-        final x = -position.dx * (scale - 1);
-        final y = -position.dy * (scale - 1);
-        final zoomed = Matrix4.identity()
-          ..translate(x,y)
-          ..scale(scale);
-
-        print('$x,$y');
-
-        controller.value = zoomed;
-      },
-      child: InteractiveViewer(
-        constrained: false,
-        clipBehavior: Clip.none,
-        transformationController: controller,
-        panEnabled: true,
-        scaleEnabled: true,
-        onInteractionUpdate: (details) {
-          print(details);
-        },
-        minScale: 0.1,
-        child: Image(
-          image: AssetImage('images/pranamasana1.jpg'),
-          fit: BoxFit.cover,
-          // height: double.infinity,
-          // width: double.infinity,
-          // alignment: Alignment.center,
+    return InteractiveViewer(
+      constrained: false,
+      clipBehavior: Clip.none,
+      transformationController: controller,
+      panEnabled: true,
+      scaleEnabled: true,
+      minScale: 0.1,
+      child: ColorFiltered(
+        colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.3), BlendMode.lighten),
+        child: ColorFiltered(
+          colorFilter: ColorFilter.mode(Colors.orange.withOpacity(0.5), BlendMode.colorBurn),
+          child: Image(
+            image: AssetImage(illustration.image),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
   }
 
   void _loadPose(PoseDetails pose) {
-    if (pose.illustrations.isNotEmpty) {
+    setState(() {
+      currentPose = pose;
+      illustration = pose.illustrations.first;
+    });
 
-      controller.value = controller.value = Matrix4.identity()..translate(-520.0, -0.0)..scale(0.21);
+    if (pose.illustrations.isNotEmpty) {
+      controller.value = controller.value = Matrix4.identity()
+        ..translate(illustration.offsetX, illustration.offsetY)
+        ..scale(illustration.zoom);
     }
 
   }
