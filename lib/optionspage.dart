@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'common.dart';
-import 'yogalabel.dart';
 import 'yogabutton.dart';
 import 'practicepage.dart';
 

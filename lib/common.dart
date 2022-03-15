@@ -1,3 +1,5 @@
+/* A place to keep all the constant values */
+
 const double padding = 12.0;
 
 const String SETTINGS_CYCLES = 'cycles';

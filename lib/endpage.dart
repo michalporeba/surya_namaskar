@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'yogabutton.dart';
 import 'common.dart';
 
+/// Page displayed after completing a full exercise
 class EndPage extends StatelessWidget {
   const EndPage({Key? key}) : super(key: key);
 

@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surya_namaskar/endpage.dart';
-import 'package:surya_namaskar/posedetails.dart';
-import 'package:surya_namaskar/yogabutton.dart';
+import 'endpage.dart';
+import 'posedetails.dart';
+import 'yogabutton.dart';
 import 'common.dart';
 
 class PracticePage extends StatelessWidget {
@@ -30,21 +29,23 @@ class PoseScreen extends StatefulWidget {
 
 class _PoseScreenState extends State<PoseScreen> {
   PoseList data = PoseList()..initializePoses();
+
   late TransformationController controller = TransformationController();
-  TapDownDetails? tapDownDetails;
   late PoseDetails currentPose = data.poses[1];
+  late int requestedDuration;
+  late int requestedRepetitions;
   late Illustration illustration;
+  late Timer timer;
+
+
+  TapDownDetails? tapDownDetails;
   int currentStep = -1;
   bool isPaused = false;
   bool isStarted = false;
   int secondsRemaining = 10;
-  late int requestedDuration;
-  late int requestedRepetitions;
   bool helpMeBreathe = false;
 
-  late Timer timer;
-
-  @override 
+  @override
   void initState() {
     super.initState();
     _loadPose(currentPose);

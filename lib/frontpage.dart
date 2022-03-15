@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surya_namaskar/learnpage.dart';
-import 'package:surya_namaskar/optionspage.dart';
-import 'package:surya_namaskar/practicepage.dart';
+import 'learnpage.dart';
+import 'optionspage.dart';
 import 'warningpage.dart';
 import 'yogabutton.dart';
 import 'common.dart';
 import 'yogalabel.dart';
 import 'infopage.dart';
 
+/// First page after opening of the application
 class FrontPage extends StatelessWidget {
   const FrontPage({Key? key}) : super(key: key);
 

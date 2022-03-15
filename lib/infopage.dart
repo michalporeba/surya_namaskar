@@ -5,6 +5,7 @@ import 'common.dart';
 import 'yogabutton.dart';
 import 'yogalabel.dart';
 
+// The about us / contact us page
 class InfoPage extends StatelessWidget {
   const InfoPage({Key? key}) : super(key: key);
 
