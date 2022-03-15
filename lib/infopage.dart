@@ -16,6 +16,7 @@ class InfoPage extends StatelessWidget {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              (kReleaseMode) ? Container() : YogaLabel(text: 'This is the About Us or Contact Us page'),
               Padding(
                 padding: const EdgeInsets.all(padding),
                 child: SingleChildScrollView(

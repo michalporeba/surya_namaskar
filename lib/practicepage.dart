@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surya_namaskar/endpage.dart';
 import 'package:surya_namaskar/posedetails.dart';
 import 'package:surya_namaskar/yogabutton.dart';
 import 'common.dart';
@@ -34,19 +36,32 @@ class _PoseScreenState extends State<PoseScreen> {
   late Illustration illustration;
   int currentStep = -1;
   bool isPaused = false;
+  bool isStarted = false;
   int secondsRemaining = 10;
+  late int requestedDuration;
+  late int requestedRepetitions;
+
   late Timer timer;
 
   @override 
   void initState() {
     super.initState();
     _loadPose(currentPose);
+
+    SharedPreferences.getInstance().then((settings) {
+      requestedRepetitions = settings.getInt(SETTINGS_REPETITIONS) ?? 1;
+      requestedDuration = settings.getInt(SETTINGS_DURATION) ?? 10;
+      isStarted = true;
+    });
+
     timer = new Timer.periodic(Duration(seconds:1), (Timer t) {
-      if (isPaused) { return; }
+      if (!isStarted || isPaused) { return; }
       if (secondsRemaining > 1) {
         setState((){secondsRemaining--;});
+      } else if (currentStep >= requestedRepetitions * 22 + 1){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EndPage()));
       } else {
-        setState((){secondsRemaining=10;});
+        setState((){secondsRemaining=requestedDuration;});
         _setStep(currentStep+1);
       }
     });
@@ -121,12 +136,21 @@ class _PoseScreenState extends State<PoseScreen> {
                     padding: const EdgeInsets.all(padding),
                     child: Padding(
                       padding: const EdgeInsets.only(right: padding),
-                      child: Text('0:${secondsRemaining.toString().padLeft(2,'0')}', style: Theme.of(context).textTheme.headline2),
+                      child: (!isStarted)
+                        ? Container()
+                        : Text('0:${secondsRemaining.toString().padLeft(2,'0')}', style: Theme.of(context).textTheme.headline2),
                   )
                 ),
           ]),
               ),
           Spacer(),
+          Container(
+            color: Theme.of(context).canvasColor.withOpacity(0.2),
+            child: Padding(
+            padding: const EdgeInsets.all(padding*1.5),
+            child: Text('Image source: ${illustration.source}', style: Theme.of(context).textTheme.labelLarge),
+            ),
+          ),
           Row(
             children: [
               (currentStep >= 0) ? YogaButton(isPrimary: true, label: 'Previous', onPressed: _goBack) : Spacer(),

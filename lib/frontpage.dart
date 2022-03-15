@@ -97,7 +97,7 @@ is a yoga based exercise'''
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const InfoPage()));
                   },
-                  child: Icon(Icons.info)
+                  child: Icon(Icons.info, color: Theme.of(context).appBarTheme.foregroundColor)
               ),
             )
           ],

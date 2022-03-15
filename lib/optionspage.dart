@@ -15,7 +15,7 @@ class OptionsPage extends StatefulWidget {
 }
 
 class _OptionsPageState extends State<OptionsPage> {
-  late int cycles = 1;
+  late int repetitions = 1;
   late int duration = 12;
   
   @override 
@@ -24,9 +24,9 @@ class _OptionsPageState extends State<OptionsPage> {
     print('initialising state');
     SharedPreferences.getInstance().then((settings) {
       print('I now have the settings');
-      print('Cycles = ${settings.getInt(SETTINGS_CYCLES)}');
+      print('Cycles = ${settings.getInt(SETTINGS_REPETITIONS)}');
       setState(() {
-        cycles = settings.getInt(SETTINGS_CYCLES) ?? 1;
+        repetitions = settings.getInt(SETTINGS_REPETITIONS) ?? 1;
         duration = settings.getInt(SETTINGS_DURATION) ?? 12;
       });
     }).onError((error, stackTrace) {
@@ -52,14 +52,14 @@ class _OptionsPageState extends State<OptionsPage> {
                 Padding(
                   padding: const EdgeInsets.all(padding),
                   child: SingleChildScrollView(
-                    child: Text('Number of cycles',
+                    child: Text('Number of repetitions',
                         style: Theme.of(context).textTheme.headline4),
                   ),
                 ),
                 Padding(
                   child: SpinBox(
-                    value: cycles.toDouble(),
-                    onChanged: (value) => cycles = value.toInt(),
+                    value: repetitions.toDouble(),
+                    onChanged: (value) => repetitions = value.toInt(),
                     readOnly: false,
                     textStyle: Theme.of(context).textTheme.headline3,
                     min: 1,
@@ -104,7 +104,7 @@ class _OptionsPageState extends State<OptionsPage> {
 
   void _saveSettings() {
     SharedPreferences.getInstance().then((settings) {
-      settings.setInt(SETTINGS_CYCLES, cycles);
+      settings.setInt(SETTINGS_REPETITIONS, repetitions);
       settings.setInt(SETTINGS_DURATION, duration);
     });
 
