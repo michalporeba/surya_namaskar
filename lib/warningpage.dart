@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'optionspage.dart';
 import 'yogabutton.dart';
 import 'yogalabel.dart';
@@ -36,6 +37,9 @@ class WarningPage extends StatelessWidget {
   }
 
   void _acceptTheRisk(BuildContext context) {
+    SharedPreferences.getInstance().then((settings) {
+      settings.setBool(SETTINGS_ACCEPTED_RISK, true);
+    });
     Navigator.pushReplacement(context, MaterialPageRoute(
         builder: (context) => const OptionsPage()
     ));

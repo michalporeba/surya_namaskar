@@ -1,10 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surya_namaskar/learnpage.dart';
+import 'package:surya_namaskar/optionspage.dart';
 import 'package:surya_namaskar/practicepage.dart';
 import 'warningpage.dart';
 import 'yogabutton.dart';
 import 'common.dart';
 import 'yogalabel.dart';
+import 'infopage.dart';
 
 class FrontPage extends StatelessWidget {
   const FrontPage({Key? key}) : super(key: key);
@@ -33,9 +37,14 @@ is a yoga based exercise'''
   Widget _practiceButton(BuildContext context) => YogaButton(
       isPrimary: true,
       label: 'practice it',
-      onPressed: () => Navigator.push(context, MaterialPageRoute(
-          builder: (context) => const WarningPage()
-      ))
+      onPressed: () {
+        SharedPreferences.getInstance().then((settings) {
+          bool acceptedRisk = settings.getBool(SETTINGS_ACCEPTED_RISK) ?? false;
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => acceptedRisk ? const OptionsPage() : const WarningPage()
+          ));
+        });
+      }
   );
 
   Widget _portrait(BuildContext context) => Column(
@@ -85,8 +94,10 @@ is a yoga based exercise'''
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: padding),
               child: TextButton(
-                  onPressed: () => true,
-                  child: Icon(Icons.settings)
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const InfoPage()));
+                  },
+                  child: Icon(Icons.info)
               ),
             )
           ],

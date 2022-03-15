@@ -1,12 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'common.dart';
 import 'yogalabel.dart';
 import 'yogabutton.dart';
 import 'practicepage.dart';
 
-class OptionsPage extends StatelessWidget {
+
+class OptionsPage extends StatefulWidget {
   const OptionsPage({Key? key}) : super(key: key);
+
+  @override
+  State<OptionsPage> createState() => _OptionsPageState();
+}
+
+class _OptionsPageState extends State<OptionsPage> {
+  late int cycles = 1;
+  late int duration = 12;
+  
+  @override 
+  void initState() {
+    super.initState();
+    print('initialising state');
+    SharedPreferences.getInstance().then((settings) {
+      print('I now have the settings');
+      print('Cycles = ${settings.getInt(SETTINGS_CYCLES)}');
+      setState(() {
+        cycles = settings.getInt(SETTINGS_CYCLES) ?? 1;
+        duration = settings.getInt(SETTINGS_DURATION) ?? 12;
+      });
+    }).onError((error, stackTrace) {
+      print('ERROR $error');
+      return null;
+    });
+  }
+
+  @override
+  void dispose() {
+    _saveSettings();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +58,8 @@ class OptionsPage extends StatelessWidget {
                 ),
                 Padding(
                   child: SpinBox(
-                    value: 10,
+                    value: cycles.toDouble(),
+                    onChanged: (value) => cycles = value.toInt(),
                     readOnly: false,
                     textStyle: Theme.of(context).textTheme.headline3,
                     min: 1,
@@ -42,7 +76,8 @@ class OptionsPage extends StatelessWidget {
                 ),
                 Padding(
                   child: SpinBox(
-                    value: 10,
+                    value: duration.toDouble(),
+                    onChanged: (value) => duration = value.toInt(),
                     readOnly: false,
                     textStyle: Theme.of(context).textTheme.headline3,
                     min: 5,
@@ -61,8 +96,17 @@ class OptionsPage extends StatelessWidget {
   }
 
   void _setAndStart(BuildContext context) {
+    _saveSettings();
     Navigator.pushReplacement(context, MaterialPageRoute(
         builder: (context) => const PracticePage()
     ));
+  }
+
+  void _saveSettings() {
+    SharedPreferences.getInstance().then((settings) {
+      settings.setInt(SETTINGS_CYCLES, cycles);
+      settings.setInt(SETTINGS_DURATION, duration);
+    });
+
   }
 }
