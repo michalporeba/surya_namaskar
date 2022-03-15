@@ -63,12 +63,12 @@ class _PoseScreenState extends State<PoseScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image(
-          image: AssetImage(illustration.image),
-          fit: BoxFit.cover,
-          height: double.infinity,
-          width: double.infinity,
-        ),
+        //Image(
+        //  image: AssetImage(illustration.image),
+        //  fit: BoxFit.cover,
+        //  height: double.infinity,
+        //  width: double.infinity,
+        //),
         GestureDetector(
           onTap: () => setState(() {isPaused = true;}),
           child: InteractiveViewer(
@@ -97,7 +97,9 @@ class _PoseScreenState extends State<PoseScreen> {
               ? Row(children: [
               Padding(
                 padding: const EdgeInsets.all(0),
-                child: YogaButton(isPrimary: true, label: 'Info', onPressed: (){})
+                child: YogaButton(isPrimary: true, label: 'Stop', onPressed: (){
+                  Navigator.pop(context);
+                })
               ),
               Spacer(),
               Padding(
@@ -163,7 +165,7 @@ class _PoseScreenState extends State<PoseScreen> {
 
     setState(() {
       currentPose = pose;
-      illustration = pose.illustrations[currentStep ~/ 12 % pose.illustrations.length];
+      illustration = pose.illustrations[(currentStep ~/ 12 % pose.illustrations.length)];
     });
 
     if (pose.illustrations.isNotEmpty) {

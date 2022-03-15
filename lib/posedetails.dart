@@ -130,7 +130,7 @@ class PoseList {
     newPose.breathing = 'Normal: full inhalation and slow exhalation';
     newPose.precaution = '-';
     newPose.illustrations = [
-      Illustration('images/pranamasana1.jpg', -1280.0, -300.0, 0.42, 'keralatourism.org'),
+      Illustration('images/pranamasana1.jpg', -1280.0, -260.0, 0.42, 'keralatourism.org'),
       Illustration('images/pranamasana1.jpg', -520.0, 0.0, 0.21, 'keralatourism.org')
     ];
     return newPose;
@@ -152,8 +152,8 @@ class PoseList {
     'Do not bend your knees and elbows. Keep the upper arms'
         'and ears aligned throughout.';
     newPose.illustrations = [
-      Illustration('images/ekam1.jpeg', -250.0, 0.0, 1.17, 'https://newrajayoga.com/'),
-      Illustration('images/pose1.jpg', 0.0, 0.0, 0.44, 'Rama'),
+      Illustration('images/ekam1.jpeg', -280.0, -40.0, 1.4, 'https://newrajayoga.com/'),
+      Illustration('images/pose1.jpg', -50.0, -50.0, 0.55, 'Rama'),
     ];
     return newPose;
   }
@@ -174,8 +174,8 @@ class PoseList {
         'Ensure that your upper arms and the ears are aligned. '
         'Do not bend your knees. Go to the extend your body permits.';
     newPose.illustrations = [
-      Illustration('images/dve2.jpeg', -50.0, 0.0, 1.2, 'https://newrajayoga.com/'),
-      Illustration('images/pose2.jpg', -20.0, 0.0, 0.5, 'keralatourism.org'),
+      Illustration('images/dve2.jpeg', -120.0, -30.0, 1.4, 'https://newrajayoga.com/'),
+      Illustration('images/pose2.jpg', -40.0, -25.0, 0.55, 'keralatourism.org'),
     ];
     return newPose;
   }
@@ -194,7 +194,7 @@ class PoseList {
     newPose.breathing = 'Inhale';
     newPose.precaution = '-';
     newPose.illustrations = [
-      Illustration('images/pose3.jpg', -80.0, 0.0, 0.7, 'Rama'),
+      Illustration('images/pose3.jpg', -80.0, -25.0, 0.8, 'Rama'),
     ];
     return newPose;
   }
@@ -214,7 +214,7 @@ class PoseList {
     newPose.precaution = 'Do not bend or arch up the neck and spine. Position '
         'the shoulders above the palms without bending the elbows.';
     newPose.illustrations = [
-      Illustration('images/pose4.jpg', 0.0, 0.0, 0.25, 'Rama'),
+      Illustration('images/pose4.jpg', -1100.0, -200.0, 0.82, 'Rama'),
     ];
     return newPose;
   }
@@ -237,7 +237,7 @@ class PoseList {
         'Do not disturb the seat in order to reach forehead on '
         'the ground.';
     newPose.illustrations = [
-      Illustration('images/pose5.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose5.jpg', -60.0, -100.0, 0.8, 'Rama'),
     ];
     return newPose;
   }
@@ -255,7 +255,7 @@ class PoseList {
     newPose.breathing = 'Exhale fully and hold the breath.';
     newPose.precaution = ' ';
     newPose.illustrations = [
-      Illustration('images/pose6.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose6.jpg', -950.0, -50.0, 0.8, 'Rama'),
     ];
     return newPose;
   }
@@ -274,7 +274,7 @@ class PoseList {
     newPose.precaution = 'Do not rest the knees on the ground. Straighten '
         'the toes on the floor.';
     newPose.illustrations = [
-      Illustration('images/pose7.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose7.jpg', -900.0, -80.0, 0.8, 'Rama'),
     ];
     return newPose;
   }
@@ -291,7 +291,7 @@ class PoseList {
     newPose.breathing = 'Exhale';
     newPose.precaution = 'Do not bend your elbows and knees.';
     newPose.illustrations = [
-      Illustration('images/pose8.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose8.jpg', -980.0, -330.0, 1, 'Rama'),
     ];
     return newPose;
   }
@@ -314,7 +314,7 @@ class PoseList {
         'Do not disturb the seat in order to make the forehead '
         'touch the ground.';
     newPose.illustrations = [
-      Illustration('images/pose9.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose9.jpg', -60.0, -80.0, 0.8, 'Rama'),
     ];
     return newPose;
   }
@@ -336,7 +336,7 @@ class PoseList {
     newPose.precaution = 'Palms and the right foot should be in the same line. '
         'Do not look down or bend your neck.';
     newPose.illustrations = [
-      Illustration('images/pose10.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose10.jpg', -700.0, -25.0, 0.7, 'Rama'),
     ];
     return newPose;
   }
@@ -356,7 +356,7 @@ class PoseList {
         'Ensure that your arms and the ears are aligned. Do not'
         ' bend your knees.';
     newPose.illustrations = [
-      Illustration('images/pose11.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose11.jpg', -80.0, -25.0, 0.45, 'Rama'),
     ];
     return newPose;
   }
@@ -373,7 +373,7 @@ class PoseList {
     newPose.breathing = 'Inhale';
     newPose.precaution = 'Do not stiffen the body, be relaxed.';
     newPose.illustrations = [
-      Illustration('images/pose12.jpg', 0.0, 0.0, 0.5, 'Rama'),
+      Illustration('images/pose12.jpg', -50.0, -25.0, 0.6, 'Rama'),
     ];
     return newPose;
   }
