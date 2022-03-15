@@ -11,7 +11,7 @@ class PracticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Practice'),),
+        appBar: null,//AppBar(title: const Text('Practice'),),
         body: SafeArea(
           child: PoseScreen()
         )
@@ -42,7 +42,6 @@ class _PoseScreenState extends State<PoseScreen> {
     super.initState();
     _loadPose(currentPose);
     timer = new Timer.periodic(Duration(seconds:1), (Timer t) {
-      print('$isPaused -> $secondsRemaining');
       if (isPaused) { return; }
       if (secondsRemaining > 1) {
         setState((){secondsRemaining--;});
@@ -56,47 +55,75 @@ class _PoseScreenState extends State<PoseScreen> {
   @override
   void dispose() {
     controller.dispose();
+    timer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [InteractiveViewer(
-        constrained: false,
-        clipBehavior: Clip.none,
-        transformationController: controller,
-        panEnabled: true,
-        scaleEnabled: true,
-        minScale: 0.1,
-        child: ColorFiltered(
-          colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.3), BlendMode.lighten),
-          child: ColorFiltered(
-            colorFilter: ColorFilter.mode(Colors.orange.withOpacity(0.5), BlendMode.colorBurn),
-            child: Image(
-              image: AssetImage(illustration.image),
-              fit: BoxFit.cover,
+      children: [
+        Image(
+          image: AssetImage(illustration.image),
+          fit: BoxFit.cover,
+          height: double.infinity,
+          width: double.infinity,
+        ),
+        GestureDetector(
+          onTap: () => setState(() {isPaused = true;}),
+          child: InteractiveViewer(
+            constrained: false,
+            clipBehavior: Clip.none,
+            transformationController: controller,
+            panEnabled: true,
+            scaleEnabled: true,
+            minScale: 0.1,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(Colors.white.withOpacity(isPaused ? 0.4 : 0.2), BlendMode.lighten),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(Colors.orange.withOpacity(0.5), BlendMode.colorBurn),
+                child: Image(
+                  image: AssetImage(illustration.image),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         ),
-      ),
-      Column(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
+            (isPaused)
+              ? Row(children: [
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: YogaButton(isPrimary: true, label: 'Info', onPressed: (){})
+              ),
+              Spacer(),
+              Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: YogaButton(isPrimary: true, label: 'Continue', onPressed: () => isPaused = false)
+              )
+            ])
+              : Container(
+                color: Colors.white.withOpacity(0.4),
+                child: Row(children: [
                 Padding(
                   padding: const EdgeInsets.all(padding),
-                  child: Text(currentPose.name, style: Theme.of(context).textTheme.headline2),
-                ),
+                  child: Padding(
+                      padding: const EdgeInsets.only(left: padding),
+                      child: Text(currentPose.name, style: Theme.of(context).textTheme.headline2)
+                  ),),
                 Spacer(),
                 Padding(
-                  padding: const EdgeInsets.all(padding),
-                  child: (isPaused) ? YogaButton(isPrimary: true, label: 'Continue', onPressed: () => isPaused = false)
-                    : Text('0:${secondsRemaining.toString().padLeft(2,'0')}', style: Theme.of(context).textTheme.headline2),
-                )
-              ]
-            ),
+                    padding: const EdgeInsets.all(padding),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: padding),
+                      child: Text('0:${secondsRemaining.toString().padLeft(2,'0')}', style: Theme.of(context).textTheme.headline2),
+                  )
+                ),
+          ]),
+              ),
           Spacer(),
           Row(
             children: [

@@ -22,7 +22,7 @@ class LearnPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(padding),
-                      child: Text('${index > 0 ? index.toString() + '. ': ''}${data.poses[index].name}'
+                      child: Text('${index > 1 ? (index-1).toString() + '. ': ''}${data.poses[index].name}'
                         ,style: Theme.of(context).textTheme.headline4),
                     ),
                   ]

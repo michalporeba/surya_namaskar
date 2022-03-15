@@ -119,7 +119,7 @@ class PoseList {
 
   PoseDetails _createPoseStart() {
     PoseDetails newPose = new PoseDetails();
-    newPose.name = 'Sthiti';
+    newPose.name = 'Start';
     newPose.image = 'images/starting.jpg';
     newPose.process = 'Stand erect without bending any part of the body. '
         'Let the toes, heels, knees, and thigh be joined. Body should be erect '
