@@ -12,7 +12,6 @@ class PracticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: null,//AppBar(title: const Text('Practice'),),
         body: SafeArea(
           child: PoseScreen()
         )
@@ -61,8 +60,6 @@ class _PoseScreenState extends State<PoseScreen> {
       if (!isStarted || isPaused) { return; }
       if (secondsRemaining > 1) {
         setState((){secondsRemaining--;});
-      } else if (currentStep >= requestedRepetitions * 22 + 1){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EndPage()));
       } else {
         setState((){secondsRemaining=requestedDuration;});
         _setStep(currentStep+1);
@@ -177,7 +174,11 @@ class _PoseScreenState extends State<PoseScreen> {
       currentStep = step;
     });
     if (currentStep >= 0) {
-      _loadPose(data.poses[currentStep % 12 + 2]);
+      if (currentStep >= requestedRepetitions * 22 + 1) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EndPage()));
+      } else {
+        _loadPose(data.poses[currentStep % 12 + 2]);
+      }
     } else {
       _loadPose(data.poses[1]);
     }
@@ -201,6 +202,7 @@ class _PoseScreenState extends State<PoseScreen> {
       illustration = pose.illustrations[(currentStep ~/ 12 % pose.illustrations.length)];
     });
 
+    // when loading the pose illustration, scale and offset it using default values
     if (pose.illustrations.isNotEmpty) {
       controller.value = controller.value = Matrix4.identity()
         ..translate(illustration.offsetX, illustration.offsetY)

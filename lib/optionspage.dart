@@ -150,6 +150,7 @@ class _OptionState extends State<Option> {
             padding: const EdgeInsets.all(padding),
             child: Switch(
               value: currentValue,
+              activeColor: const Color(0xc0FF7722),
               onChanged: (bool value) {
                 setState(() { currentValue = value; });
                 widget.onChanged(value);
