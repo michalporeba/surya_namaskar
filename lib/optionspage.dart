@@ -17,6 +17,7 @@ class OptionsPage extends StatefulWidget {
 class _OptionsPageState extends State<OptionsPage> {
   late int repetitions = 1;
   late int duration = 12;
+  late bool breathing = false;
   
   @override 
   void initState() {
@@ -28,6 +29,7 @@ class _OptionsPageState extends State<OptionsPage> {
       setState(() {
         repetitions = settings.getInt(SETTINGS_REPETITIONS) ?? 1;
         duration = settings.getInt(SETTINGS_DURATION) ?? 12;
+        breathing = settings.getBool(SETTINGS_HELP_ME_BREATHE) ?? false;
       });
     }).onError((error, stackTrace) {
       print('ERROR $error');
@@ -65,7 +67,7 @@ class _OptionsPageState extends State<OptionsPage> {
                     min: 1,
                     max: 108,
                   ),
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(padding),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(padding),
@@ -83,8 +85,9 @@ class _OptionsPageState extends State<OptionsPage> {
                     min: 5,
                     max: 60,
                   ),
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(padding),
                 ),
+                Option(text: 'Help me breathe', onChanged: (value) => breathing = value),
                 Spacer(),
                 YogaButton(isPrimary: true,
                     label: 'Now, do yoga!',
@@ -106,7 +109,55 @@ class _OptionsPageState extends State<OptionsPage> {
     SharedPreferences.getInstance().then((settings) {
       settings.setInt(SETTINGS_REPETITIONS, repetitions);
       settings.setInt(SETTINGS_DURATION, duration);
+      settings.setBool(SETTINGS_HELP_ME_BREATHE, breathing);
     });
 
+  }
+}
+
+class Option extends StatefulWidget {
+  final String text;
+  final Function(bool) onChanged;
+
+  const Option({required this.text, required this.onChanged, Key? key}) : super(key: key);
+
+  @override
+  State<Option> createState() => _OptionState();
+}
+
+class _OptionState extends State<Option> {
+  bool currentValue = false;
+
+  @override
+  void initState() {
+    SharedPreferences.getInstance().then((settings) {
+      currentValue = settings.getBool(SETTINGS_HELP_ME_BREATHE) ?? false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+        children: [
+          Padding(
+              padding: const EdgeInsets.all(padding),
+              child: SingleChildScrollView(
+                child: Text('Help me breathe',
+                    style: Theme.of(context).textTheme.headline4),
+              )
+          ),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(padding),
+            child: Switch(
+              value: currentValue,
+              onChanged: (bool value) {
+                setState(() { currentValue = value; });
+                widget.onChanged(value);
+              }
+            ),
+          )
+        ]
+    );
   }
 }

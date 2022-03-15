@@ -127,7 +127,7 @@ class PoseList {
         'Place them on the chest, with thumbs touching the middle of the chest '
         'spread out.';
     newPose.benefits = '-';
-    newPose.breathing = 'Normal: full inhalation and slow exhalation';
+    newPose.breathing = 'Normal, full inhalation and slow exhalation';
     newPose.precaution = '-';
     newPose.illustrations = [
       Illustration('images/pranamasana1.jpg', -1280.0, -260.0, 0.42, 'keralatourism.org'),

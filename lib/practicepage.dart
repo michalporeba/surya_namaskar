@@ -40,6 +40,7 @@ class _PoseScreenState extends State<PoseScreen> {
   int secondsRemaining = 10;
   late int requestedDuration;
   late int requestedRepetitions;
+  bool helpMeBreathe = false;
 
   late Timer timer;
 
@@ -51,6 +52,7 @@ class _PoseScreenState extends State<PoseScreen> {
     SharedPreferences.getInstance().then((settings) {
       requestedRepetitions = settings.getInt(SETTINGS_REPETITIONS) ?? 1;
       requestedDuration = settings.getInt(SETTINGS_DURATION) ?? 10;
+      helpMeBreathe = settings.getBool(SETTINGS_HELP_ME_BREATHE) ?? false;
       isStarted = true;
     });
 
@@ -78,12 +80,6 @@ class _PoseScreenState extends State<PoseScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        //Image(
-        //  image: AssetImage(illustration.image),
-        //  fit: BoxFit.cover,
-        //  height: double.infinity,
-        //  width: double.infinity,
-        //),
         GestureDetector(
           onTap: () => setState(() {isPaused = true;}),
           child: InteractiveViewer(
@@ -138,11 +134,23 @@ class _PoseScreenState extends State<PoseScreen> {
                       padding: const EdgeInsets.only(right: padding),
                       child: (!isStarted)
                         ? Container()
-                        : Text('0:${secondsRemaining.toString().padLeft(2,'0')}', style: Theme.of(context).textTheme.headline2),
+                        : Text('${secondsRemaining~/60}:${secondsRemaining.toString().padLeft(2,'0')}', style: Theme.of(context).textTheme.headline2),
                   )
                 ),
           ]),
               ),
+          (helpMeBreathe)
+            ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: padding),
+              child: Container(
+                color: Theme.of(context).canvasColor.withOpacity(0.2),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: padding, horizontal: padding*2),
+                  child: Text(currentPose.breathing, style: Theme.of(context).textTheme.headline2),
+                ),
+              ),
+            )
+            : Container(),
           Spacer(),
           Container(
             color: Theme.of(context).canvasColor.withOpacity(0.2),
