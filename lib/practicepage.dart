@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:surya_namaskar/posedetails.dart';
 import 'package:surya_namaskar/yogabutton.dart';
@@ -31,11 +33,24 @@ class _PoseScreenState extends State<PoseScreen> {
   late PoseDetails currentPose = data.poses[1];
   late Illustration illustration;
   int currentStep = -1;
+  bool isPaused = false;
+  int secondsRemaining = 10;
+  late Timer timer;
 
   @override 
   void initState() {
     super.initState();
     _loadPose(currentPose);
+    timer = new Timer.periodic(Duration(seconds:1), (Timer t) {
+      print('$isPaused -> $secondsRemaining');
+      if (isPaused) { return; }
+      if (secondsRemaining > 1) {
+        setState((){secondsRemaining--;});
+      } else {
+        setState((){secondsRemaining=10;});
+        _setStep(currentStep+1);
+      }
+    });
   }
 
   @override
@@ -68,10 +83,20 @@ class _PoseScreenState extends State<PoseScreen> {
       Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          Padding(
-            padding: const EdgeInsets.all(padding),
-            child: Text(currentPose.name, style: Theme.of(context).textTheme.headline2),
-          ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(padding),
+                  child: Text(currentPose.name, style: Theme.of(context).textTheme.headline2),
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(padding),
+                  child: (isPaused) ? YogaButton(isPrimary: true, label: 'Continue', onPressed: () => isPaused = false)
+                    : Text('0:${secondsRemaining.toString().padLeft(2,'0')}', style: Theme.of(context).textTheme.headline2),
+                )
+              ]
+            ),
           Spacer(),
           Row(
             children: [
@@ -96,8 +121,15 @@ class _PoseScreenState extends State<PoseScreen> {
     }
   }
 
-  void _goBack() => _setStep(currentStep -1);
-  void _goForward() => _setStep(currentStep +1);
+  void _goBack() {
+    isPaused = true;
+    _setStep(currentStep -1);
+  }
+
+  void _goForward() {
+    isPaused = true;
+    _setStep(currentStep + 1);
+  }
 
   void _loadPose(PoseDetails pose) {
     data = PoseList()..initializePoses();

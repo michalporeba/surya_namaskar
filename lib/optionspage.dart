@@ -27,7 +27,7 @@ class OptionsPage extends StatelessWidget {
                   child: SpinBox(
                     value: 10,
                     readOnly: false,
-                    textStyle: Theme.of(context).textTheme.headline2,
+                    textStyle: Theme.of(context).textTheme.headline3,
                     min: 1,
                     max: 108,
                   ),
@@ -44,7 +44,7 @@ class OptionsPage extends StatelessWidget {
                   child: SpinBox(
                     value: 10,
                     readOnly: false,
-                    textStyle: Theme.of(context).textTheme.headline2,
+                    textStyle: Theme.of(context).textTheme.headline3,
                     min: 5,
                     max: 60,
                   ),

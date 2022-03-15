@@ -38,7 +38,11 @@ class SuryaNamaskar extends StatelessWidget {
         textTheme: Theme.of(context).textTheme.apply(
           bodyColor: Colors.white38,
           displayColor: Colors.white70,
-        ),
+        ).copyWith(
+          headline2: Theme.of(context).textTheme.headline2?.copyWith(
+              color: Colors.black38,
+          )
+        )
       ),
       themeMode: ThemeMode.dark,
       home: FrontPage()
@@ -70,6 +74,11 @@ class SNApp extends StatelessWidget {
             fontSize: 72.0,
             fontWeight: FontWeight.bold,
             color: Colors.deepPurple,
+          ),
+          headline2: TextStyle(
+            fontSize: 42.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black38
           ),
           headline6: TextStyle(
             fontSize: 32.0,
