@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'endpage.dart';
@@ -36,7 +38,7 @@ class _PoseScreenState extends State<PoseScreen> {
   late Illustration illustration;
   late Timer timer;
 
-
+  AudioCache audioCache = AudioCache();
   TapDownDetails? tapDownDetails;
   int currentStep = -1;
   bool isPaused = false;
@@ -48,6 +50,8 @@ class _PoseScreenState extends State<PoseScreen> {
   void initState() {
     super.initState();
     _loadPose(currentPose);
+
+    audioCache.fixedPlayer?.notificationService.startHeadlessService();
 
     SharedPreferences.getInstance().then((settings) {
       requestedRepetitions = settings.getInt(SETTINGS_REPETITIONS) ?? 1;
@@ -62,7 +66,7 @@ class _PoseScreenState extends State<PoseScreen> {
         setState((){secondsRemaining--;});
       } else {
         setState((){secondsRemaining=requestedDuration;});
-        _setStep(currentStep+1);
+        _setStep(currentStep+1, true);
       }
     });
   }
@@ -113,7 +117,10 @@ class _PoseScreenState extends State<PoseScreen> {
               Spacer(),
               Padding(
                   padding: const EdgeInsets.all(0),
-                  child: YogaButton(isPrimary: true, label: 'Continue', onPressed: () => isPaused = false)
+                  child: YogaButton(isPrimary: true, label: 'Continue', onPressed: () {
+                    setState((){secondsRemaining=requestedDuration;});
+                    isPaused = false;
+                  })
               )
             ])
               : Container(
@@ -169,7 +176,7 @@ class _PoseScreenState extends State<PoseScreen> {
     ]);
   }
 
-  void _setStep(int step) {
+  void _setStep(int step, [bool withHorn = false]) {
     setState(() {
       currentStep = step;
     });
@@ -177,6 +184,9 @@ class _PoseScreenState extends State<PoseScreen> {
       if (currentStep >= requestedRepetitions * 22 + 1) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EndPage()));
       } else {
+        if (withHorn) {
+          audioCache.play('buzzer.mp3', isNotification: true);
+        }
         _loadPose(data.poses[currentStep % 12 + 2]);
       }
     } else {
